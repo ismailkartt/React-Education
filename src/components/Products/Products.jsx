@@ -1,17 +1,24 @@
 import ProductItem from "./ProductItem";
-import { productData } from "../../productData";
 import "./Products.css";
 import NewProduct from "../NewProduct/NewProduct";
+import { useState } from "react";
 
 const Products = () => {
+  const [products, setProducts] = useState([]);
+
+  console.log("products", products);
   return (
     <div className="product-wrapper">
-      <NewProduct />
+      <NewProduct products={products} setProducts={setProducts} />
       <h1>Products</h1>
       <div className="products">
-        {productData.map((product) => (
-          <ProductItem key={product.productName} product={product} />
-        ))}
+        {products.length === 0 ? (
+          <p>Hiç Ürün Yok.</p>
+        ) : (
+          products.map((product) => (
+            <ProductItem product={product} key={product.id} products={products} setProducts={setProducts} />
+          ))
+        )}
       </div>
     </div>
   );
